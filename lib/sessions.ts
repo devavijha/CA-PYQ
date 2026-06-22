@@ -50,8 +50,21 @@ export const SESSION_PDFS: Record<string, Partial<Record<PaperKey, SessionPDFs>>
   'Nov 2024': DEFAULT_SESSION,
   'May 2025': DEFAULT_SESSION,
   'Nov 2025': DEFAULT_SESSION,
-  'May 2026': DEFAULT_SESSION,
 };
+
+export function getSessionPDFs(session: string, paper: PaperKey): SessionPDFs | null {
+  return SESSION_PDFS[session]?.[paper] ?? null;
+}
+
+export const ALL_SESSIONS = Object.keys(SESSION_PDFS).sort((a, b) => {
+  const monthOrder: Record<string, number> = {
+    'Nov': 6, 'Sep': 5, 'Jul': 4, 'Jun': 3, 'May': 2, 'Jan': 1,
+  };
+  const [aM, aY] = a.split(' ');
+  const [bM, bY] = b.split(' ');
+  if (bY !== aY) return Number(bY) - Number(aY);
+  return (monthOrder[bM] || 0) - (monthOrder[aM] || 0);
+});
 
 export interface QMeta {
   id: string;
