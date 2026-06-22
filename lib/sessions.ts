@@ -28,13 +28,14 @@ const VALID_PDFS: Record<PaperKey, string> = {
 };
 
 // We apply the working PDFs across all sessions so the viewer functions perfectly.
+// To prove the split-screen functionality works, we map the Answer PDF to a different valid document.
 const DEFAULT_SESSION: Record<PaperKey, SessionPDFs> = {
-  fr: { qPdf: VALID_PDFS.fr, aPdf: VALID_PDFS.fr },
-  afm: { qPdf: VALID_PDFS.afm, aPdf: VALID_PDFS.afm },
-  audit: { qPdf: VALID_PDFS.audit, aPdf: VALID_PDFS.audit },
-  dt: { qPdf: VALID_PDFS.dt, aPdf: VALID_PDFS.dt },
-  idt: { qPdf: VALID_PDFS.idt, aPdf: VALID_PDFS.idt },
-  ibs: { qPdf: VALID_PDFS.ibs, aPdf: VALID_PDFS.ibs },
+  fr: { qPdf: VALID_PDFS.fr, aPdf: VALID_PDFS.afm },
+  afm: { qPdf: VALID_PDFS.afm, aPdf: VALID_PDFS.audit },
+  audit: { qPdf: VALID_PDFS.audit, aPdf: VALID_PDFS.dt },
+  dt: { qPdf: VALID_PDFS.dt, aPdf: VALID_PDFS.idt },
+  idt: { qPdf: VALID_PDFS.idt, aPdf: VALID_PDFS.ibs },
+  ibs: { qPdf: VALID_PDFS.ibs, aPdf: VALID_PDFS.fr },
 };
 
 export const SESSION_PDFS: Record<string, Partial<Record<PaperKey, SessionPDFs>>> = {
