@@ -79,9 +79,7 @@ const MAY_2023_AUDIT_Q = 'https://resource.cdn.icai.org/75767bos61307-p3.pdf';
 const MAY_2023_IBS_Q   = 'https://resource.cdn.icai.org/75769bos61307-p5.pdf';
 const MAY_2023_DT_Q    = 'https://resource.cdn.icai.org/75776bos61307-p7.pdf';
 const MAY_2023_IDT_Q   = 'https://resource.cdn.icai.org/75777bos61307-p8.pdf';
-// Per-paper answers (May 2023) — same PDFs contain Q+A
-const MAY_2023_GP1_A   = 'https://resource.cdn.icai.org/75795bos61316-nov22-final-gp1.pdf';
-const MAY_2023_GP2_A   = 'https://resource.cdn.icai.org/75796bos61316-nov22-final-gp2.pdf';
+// Note: ICAI published May 2023 Suggested Answers inside the same per-paper PDFs above (Q+A combined).
 
 // ── Nov 2023 (ICAI Actual Papers) ─────────────────────────────────────────
 const NOV_2023_FR_Q    = 'https://resource.cdn.icai.org/79222bos63373-p1.pdf';
@@ -90,12 +88,14 @@ const NOV_2023_AUDIT_Q = 'https://resource.cdn.icai.org/79224bos63373-p3.pdf';
 const NOV_2023_IBS_Q   = 'https://resource.cdn.icai.org/79226bos63373-p5.pdf';
 const NOV_2023_DT_Q    = 'https://resource.cdn.icai.org/79227bos63373-p7.pdf';
 const NOV_2023_IDT_Q   = 'https://resource.cdn.icai.org/79228bos63373-p8.pdf';
+// Nov 2023 Suggested Answers (group-wise)
+const NOV_2023_GP1_A   = 'https://resource.cdn.icai.org/81087bos65241-nov23-final-gp1.pdf';
+const NOV_2023_GP2_A   = 'https://resource.cdn.icai.org/81088bos65241-nov23-final-gp2.pdf';
 
 // ── May 2026 (New Scheme) — uses DEFAULT (2026 papers pending CDN publication) ──
 // Note: May 2026 papers will be added once ICAI publishes them on CDN
 
 export const SESSION_PDFS: Record<string, Partial<Record<PaperKey, SessionPDFs>>> = {
-  
   // ── Jan 2021 (COVID special attempt — uses Jul 2021 group-wise PDFs) ─────
   'Jan 2021': {
     fr:    { qPdf: JUL_2021_Q_GP1, aPdf: JUL_2021_Q_GP1 },
@@ -146,7 +146,7 @@ export const SESSION_PDFS: Record<string, Partial<Record<PaperKey, SessionPDFs>>
     ibs:   { qPdf: NOV_2022_IBS_Q,   aPdf: NOV_2022_GP2_A },
   },
 
-  // ── May 2023 (ICAI Actual — per-paper questions, suggested answers) ───────
+  // ── May 2023 (ICAI Actual — Q+A combined in same per-paper PDF) ───────────
   'May 2023': {
     fr:    { qPdf: MAY_2023_FR_Q,    aPdf: MAY_2023_FR_Q },
     afm:   { qPdf: MAY_2023_AFM_Q,   aPdf: MAY_2023_AFM_Q },
@@ -156,14 +156,14 @@ export const SESSION_PDFS: Record<string, Partial<Record<PaperKey, SessionPDFs>>
     ibs:   { qPdf: MAY_2023_IBS_Q,   aPdf: MAY_2023_IBS_Q },
   },
 
-  // ── Nov 2023 (ICAI Actual — per-paper suggested answers) ─────────────────
+  // ── Nov 2023 (ICAI Actual — per-paper questions + group suggested answers) ─
   'Nov 2023': {
-    fr:    { qPdf: NOV_2023_FR_Q,    aPdf: NOV_2023_FR_Q },
-    afm:   { qPdf: NOV_2023_AFM_Q,   aPdf: NOV_2023_AFM_Q },
-    audit: { qPdf: NOV_2023_AUDIT_Q, aPdf: NOV_2023_AUDIT_Q },
-    dt:    { qPdf: NOV_2023_DT_Q,    aPdf: NOV_2023_DT_Q },
-    idt:   { qPdf: NOV_2023_IDT_Q,   aPdf: NOV_2023_IDT_Q },
-    ibs:   { qPdf: NOV_2023_IBS_Q,   aPdf: NOV_2023_IBS_Q },
+    fr:    { qPdf: NOV_2023_FR_Q,    aPdf: NOV_2023_GP1_A },
+    afm:   { qPdf: NOV_2023_AFM_Q,   aPdf: NOV_2023_GP1_A },
+    audit: { qPdf: NOV_2023_AUDIT_Q, aPdf: NOV_2023_GP1_A },
+    dt:    { qPdf: NOV_2023_DT_Q,    aPdf: NOV_2023_GP2_A },
+    idt:   { qPdf: NOV_2023_IDT_Q,   aPdf: NOV_2023_GP2_A },
+    ibs:   { qPdf: NOV_2023_IBS_Q,   aPdf: NOV_2023_GP2_A },
   },
 
   // ── 2024 & 2025 (untouched — DEFAULT session) ─────────────────────────────
