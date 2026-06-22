@@ -15,20 +15,6 @@ function fmt(secs: number) {
   return `${m}:${s}`;
 }
 
-function beep(freq = 880, duration = 0.18) {
-  try {
-    const ctx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain); gain.connect(ctx.destination);
-    osc.frequency.value = freq;
-    osc.type = 'sine';
-    gain.gain.setValueAtTime(0.35, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
-    osc.start(); osc.stop(ctx.currentTime + duration);
-  } catch { /* silently ignore if AudioContext blocked */ }
-}
-
 interface PomodoroProps {
   open: boolean;
   onClose: () => void;
@@ -41,7 +27,45 @@ export function Pomodoro({ open, onClose }: PomodoroProps) {
   const [sessions, setSessions]   = useState(0);   // completed focus sessions
   const [autoAdvance, setAutoAdvance] = useState(true);
   const [customMins, setCustomMins]   = useState<Partial<Record<Mode, number>>>({});
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const intervalRef  = useRef<ReturnType<typeof setInterval> | null>(null);
+  // AudioContext created on first user gesture so browsers allow sound
+  const audioCtxRef  = useRef<AudioContext | null>(null);
+
+  // Must be called inside a click handler to satisfy browser autoplay policy
+  function initAudio() {
+    if (!audioCtxRef.current) {
+      const AC = window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      audioCtxRef.current = new AC();
+    }
+    // Resume if suspended (happens after tab loses focus)
+    if (audioCtxRef.current.state === 'suspended') {
+      audioCtxRef.current.resume();
+    }
+  }
+
+  function playTone(freq: number, duration: number) {
+    const ctx = audioCtxRef.current;
+    if (!ctx) return;
+    try {
+      const osc  = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.frequency.value = freq;
+      osc.type = 'sine';
+      gain.gain.setValueAtTime(0.4, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+      osc.start();
+      osc.stop(ctx.currentTime + duration);
+    } catch { /* ignore */ }
+  }
+
+  function playChime() {
+    playTone(880, 0.2);
+    setTimeout(() => playTone(660, 0.25), 260);
+    setTimeout(() => playTone(990, 0.3),  520);
+  }
 
   const totalSecs = (customMins[mode] ?? MODES[mode].mins) * 60;
   const pct       = ((totalSecs - secsLeft) / totalSecs) * 100;
@@ -61,9 +85,7 @@ export function Pomodoro({ open, onClose }: PomodoroProps) {
       setSecsLeft(s => {
         if (s <= 1) {
           clearInterval(intervalRef.current!);
-          beep(880, 0.18);
-          setTimeout(() => beep(660, 0.22), 250);
-          setTimeout(() => beep(990, 0.28), 500);
+          playChime();
           if (autoAdvance) {
             setSessions(prev => {
               const next = mode === 'focus' ? prev + 1 : prev;
@@ -197,7 +219,10 @@ export function Pomodoro({ open, onClose }: PomodoroProps) {
         {/* Controls */}
         <div style={{ display: 'flex', gap: 10, marginBottom: 20 }}>
           <button
-            onClick={() => setRunning(r => !r)}
+            onClick={() => {
+              initAudio();          // ← must happen inside click handler
+              setRunning(r => !r);
+            }}
             style={{
               flex: 1, padding: '12px 0',
               borderRadius: 12, border: 'none', cursor: 'pointer',
