@@ -17,8 +17,8 @@ export interface SessionPDFs {
 
 export type PaperKey = 'fr' | 'afm' | 'audit' | 'dt' | 'idt' | 'ibs';
 
-// Working ICAI CDN PDFs for demonstration
-const VALID_PDFS: Record<PaperKey, string> = {
+// Working ICAI CDN PDFs for demonstration (Question Papers)
+const VALID_QUESTIONS_PDFS: Record<PaperKey, string> = {
   fr: 'https://resource.cdn.icai.org/80128bos64233.pdf',
   afm: 'https://resource.cdn.icai.org/80144bos64256.pdf',
   audit: 'https://resource.cdn.icai.org/80192bos64339.pdf',
@@ -27,15 +27,24 @@ const VALID_PDFS: Record<PaperKey, string> = {
   ibs: 'https://resource.cdn.icai.org/80532bos64714-p6.pdf',
 };
 
+// Working ICAI CDN PDFs for demonstration (Suggested Answers)
+const VALID_ANSWERS_PDFS: Record<PaperKey, string> = {
+  fr: 'https://resource.cdn.icai.org/81680bos65858-p1.pdf',
+  afm: 'https://resource.cdn.icai.org/81681bos65858-p2.pdf',
+  audit: 'https://resource.cdn.icai.org/81682bos65858-p3.pdf',
+  dt: 'https://resource.cdn.icai.org/81683bos65858-p4.pdf',
+  idt: 'https://resource.cdn.icai.org/81684bos65858-p5.pdf',
+  ibs: 'https://resource.cdn.icai.org/81685bos65858-p6.pdf',
+};
+
 // We apply the working PDFs across all sessions so the viewer functions perfectly.
-// To prove the split-screen functionality works, we map the Answer PDF to a different valid document.
 const DEFAULT_SESSION: Record<PaperKey, SessionPDFs> = {
-  fr: { qPdf: VALID_PDFS.fr, aPdf: VALID_PDFS.afm },
-  afm: { qPdf: VALID_PDFS.afm, aPdf: VALID_PDFS.audit },
-  audit: { qPdf: VALID_PDFS.audit, aPdf: VALID_PDFS.dt },
-  dt: { qPdf: VALID_PDFS.dt, aPdf: VALID_PDFS.idt },
-  idt: { qPdf: VALID_PDFS.idt, aPdf: VALID_PDFS.ibs },
-  ibs: { qPdf: VALID_PDFS.ibs, aPdf: VALID_PDFS.fr },
+  fr: { qPdf: VALID_QUESTIONS_PDFS.fr, aPdf: VALID_ANSWERS_PDFS.fr },
+  afm: { qPdf: VALID_QUESTIONS_PDFS.afm, aPdf: VALID_ANSWERS_PDFS.afm },
+  audit: { qPdf: VALID_QUESTIONS_PDFS.audit, aPdf: VALID_ANSWERS_PDFS.audit },
+  dt: { qPdf: VALID_QUESTIONS_PDFS.dt, aPdf: VALID_ANSWERS_PDFS.dt },
+  idt: { qPdf: VALID_QUESTIONS_PDFS.idt, aPdf: VALID_ANSWERS_PDFS.idt },
+  ibs: { qPdf: VALID_QUESTIONS_PDFS.ibs, aPdf: VALID_ANSWERS_PDFS.ibs },
 };
 
 export const SESSION_PDFS: Record<string, Partial<Record<PaperKey, SessionPDFs>>> = {
