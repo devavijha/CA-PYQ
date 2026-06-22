@@ -47,8 +47,8 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes modalOpen {
-  from { opacity: 0; transform: scale(0.97); }
-  to   { opacity: 1; transform: scale(1); }
+  from { opacity: 0; transform: scale(0.97) translate(-50%, -50%); }
+  to   { opacity: 1; transform: scale(1)    translate(-50%, -50%); }
 }
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-8px); }
@@ -92,3 +92,102 @@ body {
 
 /* Urgent pulse */
 .urgent-pulse { animation: urgentPulse 1.2s ease infinite; }
+
+/* ── Responsive helpers ── */
+
+/* Touch target minimum */
+button, [role="button"] { min-height: 36px; min-width: 36px; }
+
+/* ── Tablet (≤ 900px) ── */
+@media (max-width: 900px) {
+  /* Subject grid: 2 columns */
+  #subject-grid-section > div[style*="grid-template-columns"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  /* How-it-works / why section: 1 col */
+  #why-it-works > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+  #how-it-works > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* Hero padding */
+  #hero { padding: 48px 20px 40px !important; }
+  /* Stats strip: wrap */
+  [role="region"][aria-label="Platform statistics"] {
+    flex-wrap: wrap !important;
+    padding: 32px 20px !important;
+  }
+  [role="region"][aria-label="Platform statistics"] > div {
+    flex: 1 1 45% !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0 !important;
+  }
+}
+
+/* ── Mobile (≤ 768px) ── */
+@media (max-width: 768px) {
+  /* Show hamburger, hide desktop links + CTA */
+  .nav-links  { display: none !important; }
+  .nav-cta    { display: none !important; }
+  .hamburger  { display: flex !important; }
+  /* Shrink pomodoro label */
+  .pomodoro-label { display: none; }
+
+  /* Hero */
+  #hero { padding: 40px 16px 32px !important; }
+  #hero h1 { font-size: clamp(32px, 10vw, 56px) !important; }
+
+  /* Subject grid: 1 col */
+  #subject-grid-section > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+  #subject-grid-section { padding: 40px 16px !important; }
+
+  /* Stats */
+  [role="region"][aria-label="Platform statistics"] {
+    flex-wrap: wrap !important;
+    padding: 24px 16px !important;
+  }
+  [role="region"][aria-label="Platform statistics"] > div {
+    flex: 1 1 45% !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0 !important;
+  }
+
+  /* Ticker */
+  .ticker-track { gap: 24px !important; font-size: 10px !important; }
+
+  /* Why / how sections */
+  #why-it-works, #how-it-works {
+    padding: 40px 16px !important;
+  }
+  #why-it-works > div[style*="grid-template-columns"],
+  #how-it-works > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  /* Dark closing banner */
+  #why-it-works > div[style*="background: var(--ink)"] {
+    flex-direction: column !important;
+    text-align: center !important;
+  }
+  #why-it-works > div[style*="background: var(--ink)"] p {
+    font-size: 17px !important;
+  }
+
+  /* Practice modal: full width on small screens */
+  .modal-animate[style*="width"] {
+    width: 96vw !important;
+  }
+}
+
+/* ── Small phones (≤ 420px) ── */
+@media (max-width: 420px) {
+  #hero h1 { font-size: 30px !important; }
+  .mobile-menu > div:first-child {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}

@@ -1,16 +1,23 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'CA PYQ — Every question ICAI ever asked. Timed. Tracked. Answered.',
+  title: 'CA Finals — Practice smarter, clear faster.',
   description:
-    'Practice CA Final PYQs with inline ICAI suggested answers, timed sessions, and repeat-frequency tracking. Built for ICAI CA Final students.',
+    'Practice CA Final questions with inline ICAI suggested answers, timed sessions, Pomodoro focus timer, and repeat-frequency tracking. Built for ICAI CA Final students.',
   keywords: 'CA Final, ICAI, PYQ, Previous Year Questions, Financial Reporting, AFM, Audit, Direct Tax, GST',
   openGraph: {
-    title: 'CA PYQ — Every question ICAI ever asked.',
-    description: 'Practice CA Final PYQs with inline ICAI suggested answers.',
+    title: 'CA Finals — Practice smarter, clear faster.',
+    description: 'Timed. Tracked. With ICAI answers inline. Built for CA Final aspirants.',
     type: 'website',
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
