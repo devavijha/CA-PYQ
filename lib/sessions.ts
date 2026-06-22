@@ -134,7 +134,14 @@ export const SESSION_PDFS: Record<string, Partial<Record<PaperKey, SessionPDFs>>
   'Nov 2024': DEFAULT_SESSION,
   'May 2025': DEFAULT_SESSION,
   'Nov 2025': DEFAULT_SESSION,
-  'May 2026': DEFAULT_SESSION,
+  'May 2026': {
+    fr: { qPdf: 'https://resource.cdn.icai.org/mock-may2026-fr-q.pdf', aPdf: 'https://resource.cdn.icai.org/mock-may2026-fr-a.pdf' },
+    afm: { qPdf: 'https://resource.cdn.icai.org/mock-may2026-afm-q.pdf', aPdf: 'https://resource.cdn.icai.org/mock-may2026-afm-a.pdf' },
+    audit: { qPdf: 'https://resource.cdn.icai.org/mock-may2026-audit-q.pdf', aPdf: 'https://resource.cdn.icai.org/mock-may2026-audit-a.pdf' },
+    dt: { qPdf: 'https://resource.cdn.icai.org/mock-may2026-dt-q.pdf', aPdf: 'https://resource.cdn.icai.org/mock-may2026-dt-a.pdf' },
+    idt: { qPdf: 'https://resource.cdn.icai.org/mock-may2026-idt-q.pdf', aPdf: 'https://resource.cdn.icai.org/mock-may2026-idt-a.pdf' },
+    ibs: { qPdf: 'https://resource.cdn.icai.org/mock-may2026-ibs-q.pdf', aPdf: 'https://resource.cdn.icai.org/mock-may2026-ibs-a.pdf' },
+  },
 };
 
 export function getSessionPDFs(session: string, paper: PaperKey): SessionPDFs | null {
