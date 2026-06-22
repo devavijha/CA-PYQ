@@ -117,4 +117,13 @@ export const QUESTION_META: QMeta[] = [
   
   // IBS
   { id:'ibs-n24-q1', session:'Nov 2024', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:5, aPageEnd:15, marks:30, chapter:'Multidisciplinary Case Studies', topic:'M&A Case Study — Strategy, Valuation & Post-merger Integration', difficulty:'Hard', timerMins:60, repeatCount:2, relatedSessions:['Nov 2023','Nov 2024'] },
+
+  // OLD SCHEME (Sample Data to demonstrate filters)
+  // Nov 2023
+  { id:'fr-n23-q1', session:'Nov 2023', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:2, aPageEnd:4, marks:14, chapter:'Consolidation', topic:'Business Combinations', difficulty:'Medium', timerMins:25, repeatCount:3, relatedSessions:['Nov 2023'] },
+  { id:'afm-n23-q1', session:'Nov 2023', subjectId:'afm', questionNumber:'Q.2', qPage:3, aPage:5, aPageEnd:7, marks:12, chapter:'Option Pricing', topic:'Black-Scholes Model', difficulty:'Hard', timerMins:20, repeatCount:2, relatedSessions:['Nov 2023'] },
+  
+  // May 2023
+  { id:'audit-m23-q1', session:'May 2023', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:2, aPageEnd:3, marks:5, chapter:'Code of Ethics & Independence', topic:'Code of Ethics', difficulty:'Medium', timerMins:10, repeatCount:4, relatedSessions:['May 2023'] },
+  { id:'dt-m23-q1', session:'May 2023', subjectId:'dt', questionNumber:'Q.4', qPage:5, aPage:8, aPageEnd:9, marks:8, chapter:'Transfer Pricing', topic:'Arm Length Price', difficulty:'Hard', timerMins:15, repeatCount:2, relatedSessions:['May 2023'] },
 ];
