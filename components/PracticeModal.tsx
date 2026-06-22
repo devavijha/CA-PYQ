@@ -22,7 +22,7 @@ export function PracticeModal({ question, onClose, onProgressUpdate }: PracticeM
   const [assessed, setAssessed] = useState<'nailed' | 'revision' | 'skip' | null>(null);
   const [shaking, setShaking] = useState(false);
 
-  const pdfs = getSessionPDFs(question.session, question.subjectId);
+  const pdfs = getSessionPDFs(question.session, question.subjectId as import('@/lib/data').PaperKey);
   const qPdfUrl = pdfs?.qPdf;
   const aPdfUrl = pdfs?.aPdf;
 

@@ -24,6 +24,12 @@ export interface UserProgress {
   updatedAt?: number;
 }
 
+export const EXAM_SESSIONS = [
+  'May 2018', 'Nov 2018', 'May 2019', 'Nov 2019', 'Nov 2020', 'Jan 2021',
+  'Jul 2021', 'Nov 2021', 'May 2022', 'Nov 2022', 'May 2023', 'Nov 2023',
+  'May 2024', 'Nov 2024', 'May 2025', 'Nov 2025', 'May 2026'
+];
+
 // ── Papers ────────────────────────────────────────────────
 export const PAPERS_DATA: Record<string, Paper> = {
   fr: {
@@ -173,8 +179,3 @@ export function getHotTopics(subjectId: string, questions: Question[], freqMap: 
     .slice(0, 5);
 }
 
-export const EXAM_SESSIONS = [
-  'May 2018', 'Nov 2018', 'May 2019', 'Nov 2019', 'Nov 2020', 'Jan 2021',
-  'Jul 2021', 'Nov 2021', 'May 2022', 'Nov 2022', 'May 2023', 'Nov 2023',
-  'May 2024', 'Nov 2024', 'May 2025', 'Nov 2025', 'May 2026'
-];
