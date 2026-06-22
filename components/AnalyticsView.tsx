@@ -45,13 +45,35 @@ export function AnalyticsView({ progress }: AnalyticsViewProps) {
     return { sid, att, cor, pct: att > 0 ? Math.round((cor / att) * 100) : 0 };
   });
 
-  const weakZones = [
-    { chapter: 'Transfer Pricing (DT)',    correct: 2, total: 8 },
-    { chapter: 'Option Pricing (AFM)',      correct: 3, total: 9 },
-    { chapter: 'Consolidation (FR)',        correct: 4, total: 10 },
-    { chapter: 'ECL & EIR (FR)',            correct: 2, total: 6 },
-    { chapter: 'PE in DTAA (DT)',           correct: 1, total: 5 },
-  ];
+  // Dynamically compute weakest chapters based on progress
+  const chapterStats: Record<string, { correct: number; total: number; subject: string }> = {};
+  
+  ALL_QUESTIONS.forEach(q => {
+    const p = progress[q.id];
+    if (p && p.attempted) {
+      const key = q.chapter;
+      if (!chapterStats[key]) {
+        chapterStats[key] = { correct: 0, total: 0, subject: PAPERS_DATA[q.subjectId].shortName };
+      }
+      chapterStats[key].total++;
+      if (p.correct) {
+        chapterStats[key].correct++;
+      }
+    }
+  });
+
+  const weakZones = Object.entries(chapterStats)
+    .map(([chapter, stats]) => ({
+      chapter: `${chapter} (${stats.subject})`,
+      correct: stats.correct,
+      total: stats.total,
+      accuracy: stats.correct / stats.total,
+    }))
+    .sort((a, b) => {
+      if (a.accuracy !== b.accuracy) return a.accuracy - b.accuracy;
+      return b.total - a.total;
+    })
+    .slice(0, 5);
 
   const streakMsg =
     streak === 0 ? 'Start your streak today.' :
@@ -121,23 +143,27 @@ export function AnalyticsView({ progress }: AnalyticsViewProps) {
       })}
 
       {/* Weakest Chapters */}
-      <div style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--ink-dim)', marginTop: 40, marginBottom: 16 }}>
-        Weakest Chapters
-      </div>
-      {weakZones.map((z, i) => (
-        <div key={z.chapter} style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '14px 20px', background: 'var(--surface)', border: '1px solid var(--border)',
-          borderRadius: 10, marginBottom: 8,
-        }}>
-          <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 20, color: 'var(--border-dark)', width: 32 }}>#{i + 1}</span>
-          <span style={{ flex: 1, fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 14, color: 'var(--ink)' }}>{z.chapter}</span>
-          <div style={{ textAlign: 'right' }}>
-            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontWeight: 700, fontSize: 12, color: 'var(--ink-muted)' }}>{z.correct}/{z.total} correct</div>
-            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontWeight: 700, fontSize: 12, color: '#C44B2B' }}>{Math.round((z.correct / z.total) * 100)}%</div>
+      {weakZones.length > 0 && (
+        <>
+          <div style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--ink-dim)', marginTop: 40, marginBottom: 16 }}>
+            Weakest Chapters
           </div>
-        </div>
-      ))}
+          {weakZones.map((z, i) => (
+            <div key={z.chapter} style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              padding: '14px 20px', background: 'var(--surface)', border: '1px solid var(--border)',
+              borderRadius: 10, marginBottom: 8,
+            }}>
+              <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 20, color: 'var(--border-dark)', width: 32 }}>#{i + 1}</span>
+              <span style={{ flex: 1, fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 14, color: 'var(--ink)' }}>{z.chapter}</span>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontFamily: 'JetBrains Mono, monospace', fontWeight: 700, fontSize: 12, color: 'var(--ink-muted)' }}>{z.correct}/{z.total} correct</div>
+                <div style={{ fontFamily: 'JetBrains Mono, monospace', fontWeight: 700, fontSize: 12, color: '#C44B2B' }}>{Math.round((z.correct / z.total) * 100)}%</div>
+              </div>
+            </div>
+          ))}
+        </>
+      )}
 
       {attempted < 10 && (
         <div style={{ textAlign: 'center', padding: '48px 32px', color: 'var(--ink-muted)', marginTop: 32 }}>
