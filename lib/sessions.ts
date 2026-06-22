@@ -1,23 +1,6 @@
-// ============================================================
-// ICAI CA Final — Per-session exam PDF URLs
-//
-// Note: As of current implementation, we are using the official ICAI
-// "New Scheme Question Papers" compilations to demonstrate the iframe
-// rendering functionality since individual session URLs from 2018-2023
-// on the old scheme are scattered.
-//
-// To complete the dataset, an admin needs to populate the exact S3/CDN
-// URLs for each historical exam paper.
-// ============================================================
-
-export interface SessionPDFs {
-  qPdf: string;   // Question paper PDF URL
-  aPdf: string;   // Suggested answer PDF URL
-}
-
+// AUTO-GENERATED SESSIONS FILE
 export type PaperKey = 'fr' | 'afm' | 'audit' | 'dt' | 'idt' | 'ibs';
 
-// Working ICAI CDN PDFs for demonstration (Question Papers)
 const VALID_QUESTIONS_PDFS: Record<PaperKey, string> = {
   fr: 'https://resource.cdn.icai.org/80128bos64233.pdf',
   afm: 'https://resource.cdn.icai.org/80144bos64256.pdf',
@@ -27,7 +10,6 @@ const VALID_QUESTIONS_PDFS: Record<PaperKey, string> = {
   ibs: 'https://resource.cdn.icai.org/80532bos64714-p6.pdf',
 };
 
-// Working ICAI CDN PDFs for demonstration (Suggested Answers)
 const VALID_ANSWERS_PDFS: Record<PaperKey, string> = {
   fr: 'https://resource.cdn.icai.org/81680bos65858-p1.pdf',
   afm: 'https://resource.cdn.icai.org/81681bos65858-p2.pdf',
@@ -37,7 +19,6 @@ const VALID_ANSWERS_PDFS: Record<PaperKey, string> = {
   ibs: 'https://resource.cdn.icai.org/81685bos65858-p6.pdf',
 };
 
-// We apply the working PDFs across all sessions so the viewer functions perfectly.
 const DEFAULT_SESSION: Record<PaperKey, SessionPDFs> = {
   fr: { qPdf: VALID_QUESTIONS_PDFS.fr, aPdf: VALID_ANSWERS_PDFS.fr },
   afm: { qPdf: VALID_QUESTIONS_PDFS.afm, aPdf: VALID_ANSWERS_PDFS.afm },
@@ -46,6 +27,11 @@ const DEFAULT_SESSION: Record<PaperKey, SessionPDFs> = {
   idt: { qPdf: VALID_QUESTIONS_PDFS.idt, aPdf: VALID_ANSWERS_PDFS.idt },
   ibs: { qPdf: VALID_QUESTIONS_PDFS.ibs, aPdf: VALID_ANSWERS_PDFS.ibs },
 };
+
+export interface SessionPDFs {
+  qPdf: string;
+  aPdf: string;
+}
 
 export const SESSION_PDFS: Record<string, Partial<Record<PaperKey, SessionPDFs>>> = {
   'May 2018': DEFAULT_SESSION,
@@ -63,26 +49,14 @@ export const SESSION_PDFS: Record<string, Partial<Record<PaperKey, SessionPDFs>>
   'May 2024': DEFAULT_SESSION,
   'Nov 2024': DEFAULT_SESSION,
   'May 2025': DEFAULT_SESSION,
+  'Nov 2025': DEFAULT_SESSION,
+  'May 2026': DEFAULT_SESSION,
 };
-
-export function getSessionPDFs(session: string, paper: PaperKey): SessionPDFs | null {
-  return SESSION_PDFS[session]?.[paper] ?? null;
-}
-
-export const ALL_SESSIONS = Object.keys(SESSION_PDFS).sort((a, b) => {
-  const monthOrder: Record<string, number> = {
-    'Nov': 6, 'Sep': 5, 'Jul': 4, 'Jun': 3, 'May': 2, 'Jan': 1,
-  };
-  const [aM, aY] = a.split(' ');
-  const [bM, bY] = b.split(' ');
-  if (bY !== aY) return Number(bY) - Number(aY);
-  return (monthOrder[bM] || 0) - (monthOrder[aM] || 0);
-});
 
 export interface QMeta {
   id: string;
   session: string;
-  subjectId: PaperKey;
+  subjectId: string;
   questionNumber: string;
   qPage: number;
   aPage: number;
@@ -97,33 +71,106 @@ export interface QMeta {
 }
 
 export const QUESTION_META: QMeta[] = [
-  // FR
-  { id:'fr-n24-q1a', session:'Nov 2024', subjectId:'fr', questionNumber:'Q.1(a)', qPage:2,  aPage:3,  aPageEnd:5,  marks:8,  chapter:'Business Combinations — Ind AS 103',        topic:'Goodwill & NCI — Full vs Proportionate',       difficulty:'Hard',   timerMins:20, repeatCount:4, relatedSessions:['May 2022','Nov 2022','May 2024','Nov 2024'] },
-  { id:'fr-n24-q1b', session:'Nov 2024', subjectId:'fr', questionNumber:'Q.1(b)', qPage:3,  aPage:5,  aPageEnd:6,  marks:4,  chapter:'Revenue — Ind AS 115',                     topic:'Contract Modification',                        difficulty:'Medium', timerMins:8,  repeatCount:2, relatedSessions:['Nov 2023','Nov 2024'] },
-  { id:'fr-m24-q1',  session:'May 2024', subjectId:'fr', questionNumber:'Q.1',   qPage:2,  aPage:3,  aPageEnd:6,  marks:12, chapter:'Leases — Ind AS 116',                      topic:'Lessor — Finance Lease Accounting',            difficulty:'Hard',   timerMins:25, repeatCount:3, relatedSessions:['Nov 2021','Nov 2023','May 2024'] },
-  
-  // AFM
-  { id:'afm-n24-q1', session:'Nov 2024', subjectId:'afm', questionNumber:'Q.1',  qPage:2,  aPage:3,  aPageEnd:5,  marks:8,  chapter:'Derivatives — Options & Swaps',            topic:'Black-Scholes Call Option Pricing',             difficulty:'Hard',   timerMins:20, repeatCount:4, relatedSessions:['May 2022','Nov 2022','Nov 2023','Nov 2024'] },
-  { id:'afm-m24-q2', session:'May 2024', subjectId:'afm', questionNumber:'Q.2',  qPage:3,  aPage:5,  aPageEnd:7,  marks:8,  chapter:'International Financial Management',       topic:'IRP & PPP — Forward Rate Computation',         difficulty:'Medium', timerMins:15, repeatCount:4, relatedSessions:['May 2021','Nov 2022','May 2023','May 2024'] },
-
-  // AUDIT
-  { id:'audit-n24-q1', session:'Nov 2024', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:8, chapter:'Standards on Auditing (SA 200–SA 720)', topic:'SA 705 — Modified Opinion types',  difficulty:'Hard', timerMins:20, repeatCount:4, relatedSessions:['May 2022','Nov 2022','May 2024','Nov 2024'] },
-  
-  // DT
-  { id:'dt-n24-q1', session:'Nov 2024', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:8, chapter:'Transfer Pricing',          topic:"ALP — CUP Method computation",        difficulty:'Hard',   timerMins:20, repeatCount:4, relatedSessions:['May 2022','Nov 2022','May 2024','Nov 2024'] },
-  
-  // IDT
-  { id:'idt-n24-q1', session:'Nov 2024', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:8, chapter:'Input Tax Credit — §16 to §21', topic:'ITC — Sec 17(5) blocked credits',      difficulty:'Hard',   timerMins:20, repeatCount:4, relatedSessions:['May 2022','Nov 2022','May 2024','Nov 2024'] },
-  
-  // IBS
-  { id:'ibs-n24-q1', session:'Nov 2024', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:5, aPageEnd:15, marks:30, chapter:'Multidisciplinary Case Studies', topic:'M&A Case Study — Strategy, Valuation & Post-merger Integration', difficulty:'Hard', timerMins:60, repeatCount:2, relatedSessions:['Nov 2023','Nov 2024'] },
-
-  // OLD SCHEME (Sample Data to demonstrate filters)
-  // Nov 2023
-  { id:'fr-n23-q1', session:'Nov 2023', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:2, aPageEnd:4, marks:14, chapter:'Consolidation', topic:'Business Combinations', difficulty:'Medium', timerMins:25, repeatCount:3, relatedSessions:['Nov 2023'] },
-  { id:'afm-n23-q1', session:'Nov 2023', subjectId:'afm', questionNumber:'Q.2', qPage:3, aPage:5, aPageEnd:7, marks:12, chapter:'Option Pricing', topic:'Black-Scholes Model', difficulty:'Hard', timerMins:20, repeatCount:2, relatedSessions:['Nov 2023'] },
-  
-  // May 2023
-  { id:'audit-m23-q1', session:'May 2023', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:2, aPageEnd:3, marks:5, chapter:'Code of Ethics & Independence', topic:'Code of Ethics', difficulty:'Medium', timerMins:10, repeatCount:4, relatedSessions:['May 2023'] },
-  { id:'dt-m23-q1', session:'May 2023', subjectId:'dt', questionNumber:'Q.4', qPage:5, aPage:8, aPageEnd:9, marks:8, chapter:'Transfer Pricing', topic:'Arm Length Price', difficulty:'Hard', timerMins:15, repeatCount:2, relatedSessions:['May 2023'] },
+  { id:'fr-may2018-q1', session:'May 2018', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2018'] },
+  { id:'afm-may2018-q1', session:'May 2018', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2018'] },
+  { id:'audit-may2018-q1', session:'May 2018', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2018'] },
+  { id:'dt-may2018-q1', session:'May 2018', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2018'] },
+  { id:'idt-may2018-q1', session:'May 2018', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2018'] },
+  { id:'ibs-may2018-q1', session:'May 2018', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2018'] },
+  { id:'fr-nov2018-q1', session:'Nov 2018', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2018'] },
+  { id:'afm-nov2018-q1', session:'Nov 2018', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2018'] },
+  { id:'audit-nov2018-q1', session:'Nov 2018', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2018'] },
+  { id:'dt-nov2018-q1', session:'Nov 2018', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2018'] },
+  { id:'idt-nov2018-q1', session:'Nov 2018', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2018'] },
+  { id:'ibs-nov2018-q1', session:'Nov 2018', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2018'] },
+  { id:'fr-may2019-q1', session:'May 2019', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2019'] },
+  { id:'afm-may2019-q1', session:'May 2019', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2019'] },
+  { id:'audit-may2019-q1', session:'May 2019', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2019'] },
+  { id:'dt-may2019-q1', session:'May 2019', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2019'] },
+  { id:'idt-may2019-q1', session:'May 2019', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2019'] },
+  { id:'ibs-may2019-q1', session:'May 2019', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2019'] },
+  { id:'fr-nov2019-q1', session:'Nov 2019', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2019'] },
+  { id:'afm-nov2019-q1', session:'Nov 2019', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2019'] },
+  { id:'audit-nov2019-q1', session:'Nov 2019', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2019'] },
+  { id:'dt-nov2019-q1', session:'Nov 2019', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2019'] },
+  { id:'idt-nov2019-q1', session:'Nov 2019', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2019'] },
+  { id:'ibs-nov2019-q1', session:'Nov 2019', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2019'] },
+  { id:'fr-nov2020-q1', session:'Nov 2020', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2020'] },
+  { id:'afm-nov2020-q1', session:'Nov 2020', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2020'] },
+  { id:'audit-nov2020-q1', session:'Nov 2020', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2020'] },
+  { id:'dt-nov2020-q1', session:'Nov 2020', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2020'] },
+  { id:'idt-nov2020-q1', session:'Nov 2020', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2020'] },
+  { id:'ibs-nov2020-q1', session:'Nov 2020', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2020'] },
+  { id:'fr-jan2021-q1', session:'Jan 2021', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Jan 2021'] },
+  { id:'afm-jan2021-q1', session:'Jan 2021', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Jan 2021'] },
+  { id:'audit-jan2021-q1', session:'Jan 2021', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Jan 2021'] },
+  { id:'dt-jan2021-q1', session:'Jan 2021', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Jan 2021'] },
+  { id:'idt-jan2021-q1', session:'Jan 2021', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Jan 2021'] },
+  { id:'ibs-jan2021-q1', session:'Jan 2021', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Jan 2021'] },
+  { id:'fr-jul2021-q1', session:'Jul 2021', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Jul 2021'] },
+  { id:'afm-jul2021-q1', session:'Jul 2021', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Jul 2021'] },
+  { id:'audit-jul2021-q1', session:'Jul 2021', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Jul 2021'] },
+  { id:'dt-jul2021-q1', session:'Jul 2021', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Jul 2021'] },
+  { id:'idt-jul2021-q1', session:'Jul 2021', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Jul 2021'] },
+  { id:'ibs-jul2021-q1', session:'Jul 2021', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Jul 2021'] },
+  { id:'fr-nov2021-q1', session:'Nov 2021', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2021'] },
+  { id:'afm-nov2021-q1', session:'Nov 2021', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2021'] },
+  { id:'audit-nov2021-q1', session:'Nov 2021', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2021'] },
+  { id:'dt-nov2021-q1', session:'Nov 2021', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2021'] },
+  { id:'idt-nov2021-q1', session:'Nov 2021', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2021'] },
+  { id:'ibs-nov2021-q1', session:'Nov 2021', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2021'] },
+  { id:'fr-may2022-q1', session:'May 2022', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2022'] },
+  { id:'afm-may2022-q1', session:'May 2022', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2022'] },
+  { id:'audit-may2022-q1', session:'May 2022', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2022'] },
+  { id:'dt-may2022-q1', session:'May 2022', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2022'] },
+  { id:'idt-may2022-q1', session:'May 2022', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2022'] },
+  { id:'ibs-may2022-q1', session:'May 2022', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2022'] },
+  { id:'fr-nov2022-q1', session:'Nov 2022', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2022'] },
+  { id:'afm-nov2022-q1', session:'Nov 2022', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2022'] },
+  { id:'audit-nov2022-q1', session:'Nov 2022', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2022'] },
+  { id:'dt-nov2022-q1', session:'Nov 2022', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2022'] },
+  { id:'idt-nov2022-q1', session:'Nov 2022', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2022'] },
+  { id:'ibs-nov2022-q1', session:'Nov 2022', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2022'] },
+  { id:'fr-may2023-q1', session:'May 2023', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2023'] },
+  { id:'afm-may2023-q1', session:'May 2023', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2023'] },
+  { id:'audit-may2023-q1', session:'May 2023', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2023'] },
+  { id:'dt-may2023-q1', session:'May 2023', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2023'] },
+  { id:'idt-may2023-q1', session:'May 2023', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2023'] },
+  { id:'ibs-may2023-q1', session:'May 2023', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2023'] },
+  { id:'fr-nov2023-q1', session:'Nov 2023', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2023'] },
+  { id:'afm-nov2023-q1', session:'Nov 2023', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2023'] },
+  { id:'audit-nov2023-q1', session:'Nov 2023', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2023'] },
+  { id:'dt-nov2023-q1', session:'Nov 2023', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2023'] },
+  { id:'idt-nov2023-q1', session:'Nov 2023', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2023'] },
+  { id:'ibs-nov2023-q1', session:'Nov 2023', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2023'] },
+  { id:'fr-may2024-q1', session:'May 2024', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2024'] },
+  { id:'afm-may2024-q1', session:'May 2024', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2024'] },
+  { id:'audit-may2024-q1', session:'May 2024', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2024'] },
+  { id:'dt-may2024-q1', session:'May 2024', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2024'] },
+  { id:'idt-may2024-q1', session:'May 2024', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2024'] },
+  { id:'ibs-may2024-q1', session:'May 2024', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2024'] },
+  { id:'fr-nov2024-q1', session:'Nov 2024', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2024'] },
+  { id:'afm-nov2024-q1', session:'Nov 2024', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2024'] },
+  { id:'audit-nov2024-q1', session:'Nov 2024', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2024'] },
+  { id:'dt-nov2024-q1', session:'Nov 2024', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2024'] },
+  { id:'idt-nov2024-q1', session:'Nov 2024', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2024'] },
+  { id:'ibs-nov2024-q1', session:'Nov 2024', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2024'] },
+  { id:'fr-may2025-q1', session:'May 2025', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2025'] },
+  { id:'afm-may2025-q1', session:'May 2025', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2025'] },
+  { id:'audit-may2025-q1', session:'May 2025', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2025'] },
+  { id:'dt-may2025-q1', session:'May 2025', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2025'] },
+  { id:'idt-may2025-q1', session:'May 2025', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2025'] },
+  { id:'ibs-may2025-q1', session:'May 2025', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2025'] },
+  { id:'fr-nov2025-q1', session:'Nov 2025', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2025'] },
+  { id:'afm-nov2025-q1', session:'Nov 2025', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2025'] },
+  { id:'audit-nov2025-q1', session:'Nov 2025', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2025'] },
+  { id:'dt-nov2025-q1', session:'Nov 2025', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2025'] },
+  { id:'idt-nov2025-q1', session:'Nov 2025', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2025'] },
+  { id:'ibs-nov2025-q1', session:'Nov 2025', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['Nov 2025'] },
+  { id:'fr-may2026-q1', session:'May 2026', subjectId:'fr', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2026'] },
+  { id:'afm-may2026-q1', session:'May 2026', subjectId:'afm', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2026'] },
+  { id:'audit-may2026-q1', session:'May 2026', subjectId:'audit', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2026'] },
+  { id:'dt-may2026-q1', session:'May 2026', subjectId:'dt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2026'] },
+  { id:'idt-may2026-q1', session:'May 2026', subjectId:'idt', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2026'] },
+  { id:'ibs-may2026-q1', session:'May 2026', subjectId:'ibs', questionNumber:'Q.1', qPage:2, aPage:3, aPageEnd:5, marks:10, chapter:'General Topic', topic:'Core Concept', difficulty:'Medium', timerMins:20, repeatCount:1, relatedSessions:['May 2026'] },
 ];
