@@ -46,7 +46,7 @@ export const PAPERS_DATA: Record<string, Paper> = {
       'Insurance — Ind AS 104',
       'Valuation of Shares & Intangibles',
     ],
-    examSessions: ['Nov 2024', 'May 2024', 'Nov 2023', 'May 2023', 'Nov 2022', 'May 2022', 'Nov 2021', 'May 2021', 'Jan 2021', 'Nov 2020', 'Nov 2019', 'May 2019', 'Nov 2018', 'May 2018'],
+    examSessions: EXAM_SESSIONS,
   },
   afm: {
     id: 'afm', code: 'P2',
@@ -66,7 +66,7 @@ export const PAPERS_DATA: Record<string, Paper> = {
       'Startup Finance & PE/VC',
       'Digital Finance & Fintech',
     ],
-    examSessions: ['Nov 2024', 'May 2024', 'Nov 2023', 'May 2023', 'Nov 2022', 'May 2022', 'Nov 2021', 'May 2021', 'Jan 2021', 'Nov 2020', 'Nov 2019', 'May 2019', 'Nov 2018', 'May 2018'],
+    examSessions: EXAM_SESSIONS,
   },
   audit: {
     id: 'audit', code: 'P3',
@@ -85,7 +85,7 @@ export const PAPERS_DATA: Record<string, Paper> = {
       'Code of Ethics & Independence',
       'IT Audit & CISA Concepts',
     ],
-    examSessions: ['Nov 2024', 'May 2024', 'Nov 2023', 'May 2023', 'Nov 2022', 'May 2022', 'Nov 2021', 'May 2021', 'Jan 2021', 'Nov 2020', 'Nov 2019', 'May 2019', 'Nov 2018', 'May 2018'],
+    examSessions: EXAM_SESSIONS,
   },
   dt: {
     id: 'dt', code: 'P4',
@@ -106,7 +106,7 @@ export const PAPERS_DATA: Record<string, Paper> = {
       'BEPS & MLI',
       'Non-residents, WHT, Equalisation Levy',
     ],
-    examSessions: ['Nov 2024', 'May 2024', 'Nov 2023', 'May 2023', 'Nov 2022', 'May 2022', 'Nov 2021', 'May 2021', 'Jan 2021', 'Nov 2020', 'Nov 2019', 'May 2019', 'Nov 2018', 'May 2018'],
+    examSessions: EXAM_SESSIONS,
   },
   idt: {
     id: 'idt', code: 'P5',
@@ -130,7 +130,7 @@ export const PAPERS_DATA: Record<string, Paper> = {
       'Customs — Procedures & Exemptions',
       'Foreign Trade Policy (FTP)',
     ],
-    examSessions: ['Nov 2024', 'May 2024', 'Nov 2023', 'May 2023', 'Nov 2022', 'May 2022', 'Nov 2021', 'May 2021', 'Jan 2021', 'Nov 2020', 'Nov 2019', 'May 2019', 'Nov 2018', 'May 2018'],
+    examSessions: EXAM_SESSIONS,
   },
   ibs: {
     id: 'ibs', code: 'P6',
@@ -144,7 +144,7 @@ export const PAPERS_DATA: Record<string, Paper> = {
       'Digital Transformation',
       'Integrated Reporting Framework',
     ],
-    examSessions: ['Nov 2024', 'May 2024', 'Nov 2023', 'May 2023', 'Nov 2022', 'May 2022', 'Nov 2021', 'May 2021', 'Jan 2021', 'Nov 2020', 'Nov 2019', 'May 2019', 'Nov 2018', 'May 2018'],
+    examSessions: EXAM_SESSIONS,
   },
 };
 
